@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+    <!---------- EVENT DETAILS ---------->
+    <h1><%= potluck.name%></h1> 
+    <h2><%= potluck.date%></h2> 
+    <h2><%= potluck.time%></h2>
+    <h2><%= potluck.location%></h2>
+    
+    <% if (user) { %>
+    <a href="/dashboard">Back to dashboard</a>
+    <% } %>
+    
+    <!---------- UPDATE EVENT DETAILS ---------->
+
+    <button class="btn btn-open">Update your event details</button> 
+    
+     <!-- Errors flash if someone besides event creator tries to update event details -->
+     <% if (locals.messages.errors) { %>
+        <% messages.errors.forEach( el => { %>
+            <div class="alert alert-danger"><%= el.msg %></div>
+        <% }) %>    
+    <% } %>
+
+    <section class="modal hidden">
+        <button class="btn-close">X</button>
+        <h3>Update your event details:</h3>
+       
+        <form action="/event/updateName/<%= potluck._id%>?_method=PUT" method="POST">
+            <span>Event Name:</span>
+            <input type="text" name="eventName" id="eventName" placeholder="Bob's Breakfast Potluck">
+            <input type="submit" value="Update">
+        </form>
+            
+        <form action="/event/updateDate/<%= potluck._id%>?_method=PUT" method="POST">
+            <span>Date:</span>
+            <input type="text" name="eventDate" id="eventDate" placeholder="Weekday Month Day">
+            <input type="submit" value="Update">
+        </form>
+    
+        <form action="/event/updateTime/<%= potluck._id%>?_method=PUT" method="POST">
+            <span>Time:</span>
+            <input type="text" name="eventTime" id="eventTime" placeholder="8:00am">
+            <input type="submit" value="Update">
+        </form>
+    
+        <form action="/event/updateLocation/<%= potluck._id%>?_method=PUT" method="POST">
+            <span>Location:</span>
+            <input type="text" name="eventLocation" id="eventLocation" placeholder="123 MyStreet, Sacramento">
+            <input type="submit" value="Update">
+        </form>
+    </section>
+
+    <!---------- REQUESTS ---------->
+    <section>
+        <h2>Requests:</h2>
+
+        <ul>
+            <% requests.forEach( el => { %>
+                <li class='request' data-id='<%=el._id%>'>
+                    <!-- Shows if item is incomplete-->
+                    <form action="/event/markComplete/<%= el._id %>/<%= potluck._id %>?_method=PUT" method="POST" class='<%= el.completed === true ? 'hidden' : '' %>'>
+                        <button class='<%= el.completed === true ? 'completed' : 'not noStyleBtn' %>'><%= el.item %></button>
+                    </form>
+                    <!-- Shows if item is complete-->
+                    <form action="/event/markIncomplete/<%= el._id %>/<%= potluck._id %>?_method=PUT" method="POST" class='<%= el.completed === true ? '' : 'hidden' %>'>
+                        <button class='<%= el.completed === true ? 'completed noStyleBtn' : 'not' %>'><%= el.item %></button>
+                   </form>
+
+                    <form action="/event/deleteRequest/<%= el._id %>/<%= potluck._id %>?_method=DELETE" method="POST" class="">
+                        <button class="btn btn-primary fa fa-trash" type="submit">Delete</button>
+                    </form> <!-- create modal to confirm deletion -->
+
+                </li>
+            <% }) %>    
+        </ul>
+
+        <h3 class="">Add a Request:</h3>
+        
+            <form action="/event/createRequest/<%= potluck._id%>" method='POST'>
+                <span>Item request:</span>
+                <input type="text" placeholder="Enter item request" name='requestItem'>
+                <span>Dietary requests:</span>
+                <input type="text" name='dietaryRestrictions' placeholder="Vegan, Vegetarian, Gluten Free, etc.">
+                <input type="submit" value="Submit">
+            </form> 
+    </section>
+    
+    <!---------- ITEMS ---------->
+    <section>
+        <h2>What food or drinks are ya bringin'?</h2>
+        <p>If the item you're bringing is on the request list, please click the request item to mark it complete!</p>
+
+        <ul>
+            <% items.forEach( el => { %>
+                <li class='todoItem' data-id='<%=el._id%>'>
+                    <span class=''><%= el.item %></span>
+                    
+                    <span class='<%= el.dietaryRestrictions ? 'diet' : 'hidden'%>'>Dietary Restrictions:<%= el.dietaryRestrictions[0].toUpperCase() + el.dietaryRestrictions.slice(1) %></span>
+
+                    <p class='<%= el.notes ? 'notes' : 'hidden'%>'>Additional Notes:<%= el.notes %></p>
+
+                    <span class='<%= el.person ? 'person' : 'hidden'%>'>Who's bringin': <%= el.person %></span>
+
+                    <form action="/event/deleteItem/<%= el._id %>/<%= potluck._id %>?_method=DELETE" method="POST" class="col-3">
+                        <button class="btn btn-primary fa fa-trash" type="submit">Delete</button>
+                    </form> <!-- create modal to confirm deletion -->
+                </li>
+            <% }) %>    
+        </ul>
+    
+        <h3 class="">Add what you're bringing:</h3>
+
+            <form action="/event/createItem/<%= potluck._id%>" method='POST'>
+                <span>Food/Beverage name:</span>
+                <input type="text" placeholder="Enter item you are bringing" name='itemName'>
+                <span>Dietary Restrictions?</span>
+                <input type="text" name="dietaryRestrictions" id="dietaryRestrictions" placeholder="Vegan, Vegetarian, Gluten   Free, etc.">
+                <span>Additional notes:</span>
+                <textarea name="extraNotes" id="notes" rows="3" cols="20" placeholder="Optional additional notes..."></textarea>
+                <span>Name:</span>
+                <input type="text" name="personName" placeholder="optional name">
+                <input type="submit" value="Submit">
+            </form>
+    
+    </section>
+
+    <div class="overlay hidden"></div>
+
+    <script src="/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+    <div>
+        <h3>Welcome Back, <%= user.username %>!</h3>
+        <a href="/logout" class="">Logout</a>
+    </div>
+
+    <h1>Your Potlucks:</h1>
+    <ul>
+        <% potlucks.forEach( el => { %>
+            <a href="/event/getEvent/<%= el._id%>"><li><%= el.name %></li></a>
+
+            <form action="/event/deletePotluck/<%= el._id %>?_method=DELETE" method="POST" class="">
+                <button class="btn btn-primary fa fa-trash" type="submit">Delete</button>
+            </form> <!-- create modal to confirm deletion -->
+        <% }) %>
+    </ul>
+
+    <% if (locals.messages.errors) { %>
+        <% messages.errors.forEach( el => { %>
+            <div class="alert alert-danger"><%= el.msg %></div>
+        <% }) %>    
+    <% } %>
+
+    <button class="btn btn-open">Create new event:</button>
+
+    <section class="modal hidden"> <!-- Add code to redirect and show flash error if any fields are empty? -->
+        <form action="/event/newPotluck" method="POST">
+            <button class="btn-close">X</button>
+
+            <span>Event Name:</span>
+            <input type="text" name="eventName" id="eventName" placeholder="Bob's Breakfast Potluck">
+
+            <span>Date:</span>
+            <input type="text" name="eventDate" id="eventDate" placeholder="Weekday Month Date">
+
+            <span>Time:</span>
+            <input type="text" name="eventTime" id="eventTime" placeholder="8:00am">
+
+            <span>Location:</span>
+            <input type="text" name="eventLocation" id="eventLocation" placeholder="123 MyStreet Sacramento">
+
+            <input type="submit" value="Create Event">
+        </form>
+    </section>
+
+    <div class="overlay hidden"></div>
+
+    <script src="/js/main.js"></script>
+</body>
+</html>
