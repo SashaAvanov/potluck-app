@@ -3,11 +3,7 @@ const mongoose = require('mongoose')
 const RequestSchema = new mongoose.Schema({
     item: {
         type: String,
-        required: false,
-    },
-    dietaryRestrictions: {
-        type: String,
-        required: false,
+        required: true,
     },
     completed: {
         type: Boolean,

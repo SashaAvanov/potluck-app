@@ -84,7 +84,11 @@ module.exports = {
     },
     createRequest: async (req, res)=>{
         try{
-            await Request.create({item: req.body.requestItem, dietaryRestrictions: req.body.dietaryRestrictions, completed: false, event: req.params.id})
+            if (req.body.requestItem === '') {
+                req.flash('requestErrors', { msg: 'Request name is required.' });
+                return res.redirect(`/event/getEvent/${req.params.id}`); 
+            }
+            await Request.create({item: req.body.requestItem, completed: false, event: req.params.id})
             console.log('Request has been added!')
             res.redirect(`/event/getEvent/${req.params.id}`)
         }catch(err){
@@ -124,6 +128,10 @@ module.exports = {
     },
     createItem: async (req, res)=>{
         try{
+            if (req.body.itemName === '') {
+                req.flash('itemErrors', { msg: 'Item name is required.' });
+                return res.redirect(`/event/getEvent/${req.params.id}`); 
+            }
             await Item.create({item: req.body.itemName, dietaryRestrictions: req.body.dietaryRestrictions, notes: req.body.extraNotes, person: req.body.personName, event: req.params.id})
             console.log('Item has been added!')
             res.redirect(`/event/getEvent/${req.params.id}`)

@@ -1,26 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="/css/style.css">
-</head>
-<body>
-
-    <div>
+<%- include("partials/header") %>
+<body class="centered-body">
+    <div class="welcome">
         <h3>Welcome Back, <%= user.username %>!</h3>
         <a href="/logout" class="">Logout</a>
     </div>
 
     <h1>Your Potlucks:</h1>
-    <ul>
+    <ul class="potluck-list">
         <% potlucks.forEach( el => { %>
-            <a href="/event/getEvent/<%= el._id%>"><li><%= el.name %></li></a>
+            <li>
+                <a href="/event/getEvent/<%= el._id%>"><%= el.name %></a>
 
-            <form action="/event/deletePotluck/<%= el._id %>?_method=DELETE" method="POST" class="">
-                <button class="btn btn-primary fa fa-trash" type="submit">Delete</button>
-            </form> <!-- create modal to confirm deletion -->
+                <form action="/event/deletePotluck/<%= el._id %>?_method=DELETE" method="POST" class="">
+                    <button class="del" type="submit">Delete</button>
+                </form> <!-- create modal to confirm deletion -->
+            </li>
         <% }) %>
     </ul>
 
@@ -32,7 +26,7 @@
 
     <button class="btn btn-open">Create new event:</button>
 
-    <section class="modal hidden"> <!-- Add code to redirect and show flash error if any fields are empty? -->
+    <section class="modal hidden">
         <form action="/event/newPotluck" method="POST">
             <button class="btn-close">X</button>
 
