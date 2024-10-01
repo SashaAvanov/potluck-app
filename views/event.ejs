@@ -26,26 +26,22 @@
         <button class="btn-close-details">X</button>
        
         <form action="/event/updateName/<%= potluck._id%>?_method=PUT" method="POST">
-            <span>Event Name:</span>
-            <input type="text" name="eventName" id="eventName" placeholder="Bob's Breakfast Potluck">
+            <input type="text" name="eventName" id="eventName" placeholder="Event Name">
             <input type="submit" value="Update">
         </form>
             
         <form action="/event/updateDate/<%= potluck._id%>?_method=PUT" method="POST">
-            <span>Date:</span>
             <input type="text" name="eventDate" id="eventDate" placeholder="Weekday Month Date">
             <input type="submit" value="Update">
         </form>
     
         <form action="/event/updateTime/<%= potluck._id%>?_method=PUT" method="POST">
-            <span>Time:</span>
-            <input type="text" name="eventTime" id="eventTime" placeholder="8:00am">
+            <input type="text" name="eventTime" id="eventTime" placeholder="Time">
             <input type="submit" value="Update">
         </form>
     
         <form action="/event/updateLocation/<%= potluck._id%>?_method=PUT" method="POST">
-            <span>Location:</span>
-            <input type="text" name="eventLocation" id="eventLocation" placeholder="123 MyStreet, Sacramento">
+            <input type="text" name="eventLocation" id="eventLocation" placeholder="Location">
             <input type="submit" value="Update">
         </form>
     </section>
