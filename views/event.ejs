@@ -1,5 +1,5 @@
 <%- include("partials/header") %>
-<body class="centered-body">
+<body class="col">
     <% if (user) { %>
         <a href="/dashboard" class="dashboard-link centered">Back to dashboard</a>
     <% } %>
@@ -47,7 +47,7 @@
     </section>
 
     <!---------- REQUESTS ---------->
-    <section class="requests centered-body">
+    <section class="requests col">
         <h2>Requests:</h2>
 
         <ul>
@@ -85,7 +85,7 @@
     </section>
     
     <!---------- ITEMS ---------->
-    <section class="items centered-body">
+    <section class="items col">
         <h2>What are ya bringin'?</h2>
         <p>If the item you're bringing is on the request list, please click the request item to mark it complete!</p>
 
@@ -100,7 +100,7 @@
 
                     <p class='<%= el.notes === '' ? 'hidden' : 'notes'%>'>Additional Notes: <%= el.notes %></p>
 
-                    <form action="/event/deleteItem/<%= el._id %>/<%= potluck._id %>?_method=DELETE" method="POST" class="col-3">
+                    <form action="/event/deleteItem/<%= el._id %>/<%= potluck._id %>?_method=DELETE" method="POST" class="">
                         <button class="del" type="submit">Delete</button>
                     </form> <!-- create modal to confirm deletion -->
                 </li>

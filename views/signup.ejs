@@ -1,7 +1,7 @@
 <%- include("partials/header") %>
 <body>
     <h1>Create an Account</h1>
-    <form class="col centered" action="/signup" method="POST">
+    <form class="col auth centered" action="/signup" method="POST">
         <% if (locals.messages.errors) { %>
             <% messages.errors.forEach( el => { %>
                 <div class="alert alert-danger"><%= el.msg %></div>
