@@ -1,9 +1,10 @@
 # Potluckr - Potluck Organizer
 Users can sign up to create potluck event pages. Anyone with the event link can add food or beverage requests or list what they plan on bringing.  
 Check out the app here: https://potluckr.onrender.com
+* Please give the app a minute to load!
 
 # Tech Used
-EJS, CSS, JS, Node, MongoDB
+EJS, CSS, JS, Express for Node, MongoDB
 
 # Optimizations/Changes
 - add a "copy to clipboard" button to quickly copy and share potluck URLs
